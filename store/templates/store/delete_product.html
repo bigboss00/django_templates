@@ -1,0 +1,10 @@
+{% extends 'store/main.html' %}
+{% block title %} Delete product {% endblock title %}
+{% block content %}
+  <h1>Delete product?</h1>
+  <p>You are really want to delete product!?</p>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit">Yes</button> or <a href="{{ product.get_absolute_url }}">Cancel</a>
+  </form>
+{% endblock %}

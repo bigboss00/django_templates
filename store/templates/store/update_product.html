@@ -1,0 +1,10 @@
+{% extends 'store/main.html' %}
+{% block title %} Edit product {% endblock title %}
+{% block content %}
+  <h1>Edit product</h1>
+  <form method="post", enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+  </form>
+{% endblock %}

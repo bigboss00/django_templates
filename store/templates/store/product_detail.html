@@ -1,0 +1,30 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block title %} {{ product.name }} {% endblock title %}
+{% block content %}
+    <div class="detail-container">
+        <button data-product={{product.id}} data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to Cart</button>
+        <div class="product-detail">
+            <div class="detail-left">
+                <h1 style="font-family: 'Lobster', cursive; font-size: 60px;">{{ product.name }}</h1>
+                <h3 id="detail-h3">${{ product.price }}</h3>
+                <p>{{ product.description }}</p>
+                <br>
+            </div>
+            <div class="detail-rigth">
+                <img class="detail-img" src="{{ product.imageURL }}">
+            </div>
+        </div>
+        {% if user.is_authenticated and request.user == product.user %}
+            <div class="edit-delete-buttons">
+                <div class="edit-button">
+                    <a href="{% url 'update-product' product.id %}">Edit</a>
+                </div>
+                <span style="font-size: 20px;">or</span>
+                <div class="delete-button">
+                    <a href="{% url 'delete-product' product.id %}">Delete</a>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock content %}

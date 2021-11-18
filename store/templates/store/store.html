@@ -1,0 +1,51 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block title %} Products list {% endblock title %}
+{% block content %}
+    {% if user.is_authenticated %}
+        <div class="create-button">
+            <a href="{% url 'create-product' %}">Create product</a>
+        </div>
+    {% endif %}
+    <div class="row">
+        {% for product in products %}
+        <div class="col-lg-4">
+            <a href="{% url 'product-detail' product.id %}">
+                <img class="thumbnail" src="{{product.imageURL}}">
+            </a>
+            <div class="box-element product">
+                <h6><strong><h3><a href="{% url 'product-detail' product.id %}">{{ product.name }}</a></h3></strong></h6>
+                <hr>
+                <button data-product={{product.id}} data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to Cart</button>
+                <a class="btn btn-outline-success" href="{% url 'product-detail' product.id %}">View</a>
+                <h4 style="display: inline-block; float: right"><strong>${{product.price|floatformat:2}}</strong></h4>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="pagination-div">
+        <nav aria-label="...">
+            <ul class="pagination">
+                {% if products.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page=1">&laquo; First</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ products.previous_page_number }}">{{ products.previous_page_number }}</a>
+                    </li>
+                {% endif %}
+                <li class="page-item active" aria-current="page">
+                    <a class="page-link" href="#">{{ products.number }}</a>
+                </li>
+                {% if products.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ products.next_page_number }}">{{ products.next_page_number }}</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ products.paginator.num_pages }}">Last &raquo;</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+{% endblock content %}
